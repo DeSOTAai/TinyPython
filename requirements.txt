@@ -1,0 +1,3 @@
+# DeSOTA Packgs
+pyyaml
+requests
