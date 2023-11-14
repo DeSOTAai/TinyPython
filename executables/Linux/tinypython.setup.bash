@@ -38,25 +38,7 @@ PIP_REQS=$MODEL_PATH/requirements.txt
     done
 }
 
-# >>Libraries required<<
-echo "Step 0/4 - Check Required apt instalations"
-echo "    libarchive-tools"
-apt install libarchive-tools -y &>/dev/nul
-
-# Program Installers
-#   - Miniconda
-architecture=$(uname -m)
-case $architecture in
-        x86_64) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh;;
-        x86) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86.sh;;
-        aarch64) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh;;
-        arm) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-armv7l.sh;;
-        s390x) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-s390x.sh;;
-        ppc64le) miniconda_dwnld=https://repo.aanaconda.com/miniconda/Miniconda3-latest-Linux-ppc64le.sh;;
-        ?) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh;;
-esac
-# IPUT ARGS - -s="Start Model Service"; -d="Print stuff and Pause at end"
-manualstart=0
+# IPUT ARGS -d="Print stuff and Pause at end"
 debug=0
 while getopts dhe: flag
 do
@@ -82,6 +64,26 @@ do
 done
 echo "Input Arguments:"
 echo "    debug [-d]: $debug"
+
+
+# >>Libraries required<<
+echo
+echo "Step 0/2 - Check Required apt instalations"
+echo "    libarchive-tools"
+apt install libarchive-tools -y &>/dev/nul
+
+# Program Installers
+#   - Miniconda
+architecture=$(uname -m)
+case $architecture in
+        x86_64) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh;;
+        x86) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86.sh;;
+        aarch64) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh;;
+        arm) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-armv7l.sh;;
+        s390x) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-s390x.sh;;
+        ppc64le) miniconda_dwnld=https://repo.aanaconda.com/miniconda/Miniconda3-latest-Linux-ppc64le.sh;;
+        ?) miniconda_dwnld=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh;;
+esac
 
 # Move to Project Folder
 if ( test -d "$MODEL_PATH" ); 
@@ -170,9 +172,9 @@ fi
 rm -rf /var/tmp/pip-*&> /dev/null
 # Deactivate CONDA
 conda deactivate
-chown -R $USER $MODEL_ENV
 
 echo
 echo
+chown -R $USER $MODEL_ENV
 echo 'Setup Completed!'
 exit
